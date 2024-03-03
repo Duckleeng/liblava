@@ -8,9 +8,6 @@ env:
 jobs:
   build:
 
-    permissions:
-      contents: write
-
     runs-on: ${{matrix.os}}
 
     strategy:
@@ -50,14 +47,24 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: liblava-2024
-        path: ${{github.workspace}}/build/packages/
+        path: ${{github.workspace}}/build/packages/liblava-2024.zip
 
-    - name: Release
-      uses: ncipollo/release-action@v1
-      with:
-        tag: "latest"
-        commit: "flow"
-        name: "liblava 2024"
-        body: "- Updated binaries compared to the [official release](https://github.com/liblava/liblava/releases)"
-        artifacts: "${{github.workspace}}/build/packages/"
+  release:
 
+    needs: build
+
+    permissions:
+      contents: write
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: "latest"
+          commit: "flow"
+          name: "liblava 2024"
+          body: "- Updated binaries compared to the [official release](https://github.com/liblava/liblava/releases)"
+          artifacts: "${{github.workspace}}/build/packages/liblava-2024.zip"
