@@ -44,7 +44,7 @@ jobs:
            cpack -C ${{env.BUILD_TYPE}}
 
     - name: Upload
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v3
       with:
         name: liblava-2024
         path: ${{github.workspace}}/build/packages/
