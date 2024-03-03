@@ -47,7 +47,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: liblava-2024
-        path: ${{github.workspace}}/build/packages/liblava-2024.zip
+        path: ${{github.workspace}}/build/packages/
 
   release:
 
@@ -60,6 +60,9 @@ jobs:
 
     steps:
 
+      - name: Zip
+        run: zip -r liblava-2024.zip ${{github.workspace}}/build/packages/
+
       - name: Release
         uses: ncipollo/release-action@v1
         with:
@@ -67,4 +70,4 @@ jobs:
           commit: "flow"
           name: "liblava 2024"
           body: "- Updated binaries compared to the [official release](https://github.com/liblava/liblava/releases)"
-          artifacts: "${{github.workspace}}/build/packages/liblava-2024.zip"
+          artifacts: "liblava-2024.zip"
