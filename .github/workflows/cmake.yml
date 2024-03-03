@@ -44,7 +44,7 @@ jobs:
            cpack -C ${{env.BUILD_TYPE}}
 
     - name: Upload
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: liblava-2024
         path: ${{github.workspace}}/build/packages/
@@ -60,8 +60,10 @@ jobs:
 
     steps:
 
-      - name: Zip
-        run: zip -r liblava-2024.zip ${{github.workspace}}/build/packages/
+      - name: Download
+        uses: actions/download-artifact@v4
+        with:
+          name: liblava-2024
 
       - name: Release
         uses: ncipollo/release-action@v1
