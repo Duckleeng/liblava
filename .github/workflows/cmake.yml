@@ -60,10 +60,19 @@ jobs:
 
     steps:
 
+      - name: Create Download Directory
+        run: mkdir artifact
+      
       - name: Download
         uses: actions/download-artifact@v3
         with:
           name: liblava-2024
+          path: ${{github.workspace}}/artifact
+
+      - name: Zip
+        run: |
+             cd ${{github.workspace}}/artifact
+             zip -r ../liblava-2024.zip *
 
       - name: Release
         uses: ncipollo/release-action@v1
@@ -72,4 +81,4 @@ jobs:
           commit: "flow"
           name: "liblava 2024"
           body: "- Updated binaries compared to the [official release](https://github.com/liblava/liblava/releases)"
-          artifacts: "liblava-2024.zip"
+          artifacts: "${{github.workspace}}/liblava-2024.zip"
